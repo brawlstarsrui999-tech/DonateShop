@@ -92,7 +92,8 @@ public final class ShopConfig {
         List<DurationOption> loadedDurations = new ArrayList<>();
         Map<String, DurationOption> durationsMap = new LinkedHashMap<>();
         for (Map<?, ?> raw : cfg.getMapList("durations")) {
-            String id = String.valueOf(raw.getOrDefault("id", "")).toLowerCase();
+            Object idRaw = raw.get("id");
+            String id = idRaw == null ? "" : String.valueOf(idRaw).toLowerCase();
             if (id.isEmpty()) continue;
             int days = raw.get("days") instanceof Number n ? n.intValue() : 0;
             int percent = raw.get("percent") instanceof Number n ? n.intValue() : 100;
