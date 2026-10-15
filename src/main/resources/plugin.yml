@@ -1,0 +1,25 @@
+name: DonateShop
+version: '${project.version}'
+main: com.twixrpg.donateshop.DonateShopPlugin
+api-version: '1.21'
+description: Донат-магазин — привилегии и супер-предметы за TwixCoin
+authors: [TwixRPG]
+# PlayerPoints  — валюта TwixCoin (списание/возврат через его API)
+# LuckPerms     — выдача привилегий (группы) на срок / навсегда
+# TwixRPGItems  — плагин супер-предметов (EliteItems / SuperItemsTwix): /twixitems give ...
+softdepend: [PlayerPoints, LuckPerms, TwixRPGItems, SuperItemsTwix]
+
+commands:
+  donshop:
+    description: Открыть донат-магазин
+    usage: /donshop [balance|info|reload|setrank|removerank]
+    permission: donateshop.use
+    aliases: [donateshop, dshop]
+
+permissions:
+  donateshop.use:
+    description: Разрешает пользоваться магазином /donshop
+    default: true
+  donateshop.admin:
+    description: Reload, выдача/снятие привилегий вручную
+    default: op

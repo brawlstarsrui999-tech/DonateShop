@@ -1,0 +1,194 @@
+# ============================================================
+#  DonateShop — донат-магазин Twix (Paper 1.21.11)
+#  Валюта: TwixCoin — плагин PlayerPoints
+#  Привилегии выдаёт LuckPerms (группы создаются командой:
+#    /lp creategroup coal, /lp creategroup iron, ... )
+#  Предметы выдаёт плагин супер-предметов (TwixRPGItems /
+#  SuperItemsTwix) командой /twixitems give <предмет> <ник>
+#
+#  Все тексты — в формате MiniMessage:
+#  <gradient:#c084fc:#7c3aed>текст</gradient>, <#a855f7>, <bold> и т.д.
+# ============================================================
+
+# Как округлять цены за срок (25% / 50% от полной стоимости):
+#   UP     — вверх    (25 * 25% = 6.25 -> 7 tk)
+#   DOWN   — вниз     (25 * 25% = 6.25 -> 6 tk)
+#   NEAREST— до ближайшего целого
+price-rounding: UP
+
+# Плагины, в которых ищется команда выдачи предметов (для лога/проверки).
+# Сама выдача идёт консольной командой give-command у каждого предмета ниже.
+items-plugin-names: [TwixRPGItems, SuperItemsTwix]
+
+# ------------------------------------------------------------
+#  Сроки покупки привилегии. percent — процент от полной цены.
+#  days: 0 = навсегда.
+# ------------------------------------------------------------
+durations:
+  - id: "7d"
+    days: 7
+    percent: 25
+    material: CLOCK
+    display-name: "<gradient:#e9d5ff:#a78bfa><bold>7 дней</bold></gradient>"
+  - id: "15d"
+    days: 15
+    percent: 50
+    material: RECOVERY_COMPASS
+    display-name: "<gradient:#d8b4fe:#8b5cf6><bold>15 дней</bold></gradient>"
+  - id: "forever"
+    days: 0
+    percent: 100
+    material: NETHER_STAR
+    display-name: "<gradient:#f5d0fe:#d946ef><bold>Навсегда</bold></gradient>"
+
+# ------------------------------------------------------------
+#  Привилегии. price — ПОЛНАЯ цена (навсегда), в TwixCoin (tk).
+#  group — группа LuckPerms. order — порядок/сила (для апгрейда:
+#  доплата до старшей вечной привилегии = цена старшей − цена текущей).
+# ------------------------------------------------------------
+ranks:
+  coal:
+    display-name: "<gradient:#d6d3d1:#78716c><bold>Coal</bold></gradient>"
+    group: coal
+    price: 25
+    order: 1
+    material: COAL
+    description:
+      - "<#c4b5fd>Базовая привилегия сервера</#c4b5fd>"
+      - "<#a78bfa>Префикс Coal в чате и табе</#a78bfa>"
+  iron:
+    display-name: "<gradient:#f8fafc:#94a3b8><bold>Iron</bold></gradient>"
+    group: iron
+    price: 75
+    order: 2
+    material: IRON_INGOT
+    description:
+      - "<#c4b5fd>Всё из Coal и ещё:</#c4b5fd>"
+      - "<#a78bfa>Префикс Iron в чате и табе</#a78bfa>"
+  gold:
+    display-name: "<gradient:#fef08a:#f59e0b><bold>Gold</bold></gradient>"
+    group: gold
+    price: 150
+    order: 3
+    material: GOLD_INGOT
+    description:
+      - "<#c4b5fd>Всё из Iron и ещё:</#c4b5fd>"
+      - "<#a78bfa>Префикс Gold в чате и табе</#a78bfa>"
+  diamond:
+    display-name: "<gradient:#a5f3fc:#06b6d4><bold>Diamond</bold></gradient>"
+    group: diamond
+    price: 300
+    order: 4
+    material: DIAMOND
+    description:
+      - "<#c4b5fd>Всё из Gold и ещё:</#c4b5fd>"
+      - "<#a78bfa>Префикс Diamond в чате и табе</#a78bfa>"
+  emerald:
+    display-name: "<gradient:#a7f3d0:#10b981><bold>Emerald</bold></gradient>"
+    group: emerald
+    price: 400
+    order: 5
+    material: EMERALD
+    description:
+      - "<#c4b5fd>Всё из Diamond и ещё:</#c4b5fd>"
+      - "<#a78bfa>Префикс Emerald в чате и табе</#a78bfa>"
+  netherite:
+    display-name: "<gradient:#f5d0fe:#a855f7><bold>Netherite</bold></gradient>"
+    group: netherite
+    price: 500
+    order: 6
+    material: NETHERITE_INGOT
+    description:
+      - "<#c4b5fd>Всё из Emerald и ещё:</#c4b5fd>"
+      - "<#a78bfa>Префикс Netherite в чате и табе</#a78bfa>"
+      - "<#e9d5ff>Максимальная привилегия сервера</#e9d5ff>"
+
+# ------------------------------------------------------------
+#  Предметы. Выдаются НЕ обычными предметами, а предметами
+#  плагина супер-предметов — консольной командой give-command
+#  ({player} заменяется на ник покупателя). Если команда не
+#  выполнилась (плагин предметов не установлен) — TwixCoin
+#  автоматически возвращаются покупателю.
+# ------------------------------------------------------------
+items:
+  pickaxe:
+    display-name: "<gradient:#e9d5ff:#a78bfa><bold>Аметистовая Кирка</bold></gradient>"
+    price: 65
+    material: NETHERITE_PICKAXE
+    give-command: "twixitems give pickaxe {player}"
+    description:
+      - "<#c4b5fd>Эффективность V, Удача III</#c4b5fd>"
+      - "<#a78bfa>Копает 3×3, повышенная прочность</#a78bfa>"
+  axe:
+    display-name: "<gradient:#ffe08a:#f97316><bold>Лабрис Гефеста</bold></gradient>"
+    price: 45
+    material: NETHERITE_AXE
+    give-command: "twixitems give axe {player}"
+    description:
+      - "<#c4b5fd>Эффективность V</#c4b5fd>"
+      - "<#a78bfa>Рубит дерево целиком</#a78bfa>"
+  sword:
+    display-name: "<gradient:#fef08a:#84cc16><bold>Фарм-Меч</bold></gradient>"
+    price: 125
+    material: NETHERITE_SWORD
+    give-command: "twixitems give sword {player}"
+    description:
+      - "<#c4b5fd>Добыча V, повышенная прочность</#c4b5fd>"
+      - "<#a78bfa>Можно чинить в наковальне</#a78bfa>"
+  cell_basic:
+    display-name: "<gradient:#e9d5ff:#a78bfa><bold>Ячейка Хранения</bold></gradient>"
+    price: 120
+    material: SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE
+    give-command: "twixitems give cell_basic {player}"
+    description:
+      - "<#c4b5fd>3 слота × 512 предметов</#c4b5fd>"
+  cell_advanced:
+    display-name: "<gradient:#d8b4fe:#a855f7><bold>Улучшенная Ячейка Хранения</bold></gradient>"
+    price: 165
+    material: DUNE_ARMOR_TRIM_SMITHING_TEMPLATE
+    give-command: "twixitems give cell_advanced {player}"
+    description:
+      - "<#c4b5fd>6 слотов × 1024 предмета</#c4b5fd>"
+  cell_hybrid:
+    display-name: "<gradient:#f5d0fe:#d946ef><bold>Гибридная Ячейка Хранения</bold></gradient>"
+    price: 350
+    material: SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE
+    give-command: "twixitems give cell_hybrid {player}"
+    description:
+      - "<#c4b5fd>12 слотов × 2048 предметов</#c4b5fd>"
+  cell_perfect:
+    display-name: "<gradient:#fde047:#c084fc><bold>Совершенная Ячейка Хранения</bold></gradient>"
+    price: 599
+    material: RIB_ARMOR_TRIM_SMITHING_TEMPLATE
+    give-command: "twixitems give cell_perfect {player}"
+    description:
+      - "<#c4b5fd>24 слота × 4096 предметов</#c4b5fd>"
+
+# ------------------------------------------------------------
+#  Сообщения. Плейсхолдеры: {player} {rank} {item} {price}
+#  {balance} {after} {days} {date} {group}
+# ------------------------------------------------------------
+messages:
+  prefix: "<gradient:#c084fc:#7c3aed><bold>DonateShop</bold></gradient> <dark_gray>»</dark_gray> "
+  no-permission: "<#f87171>У вас нет прав на это действие.</#f87171>"
+  only-player: "<#f87171>Команда доступна только игрокам.</#f87171>"
+  not-enough: "<#f87171>Не хватает TwixCoin!</#f87171> <#e9d5ff>Нужно: <#f0abfc>{price} tk</#f0abfc>, у вас: <#f0abfc>{balance} tk</#f0abfc></#e9d5ff>"
+  no-playerpoints: "<#f87171>Покупки временно недоступны: не найден PlayerPoints.</#f87171>"
+  no-luckperms: "<#f87171>Покупка привилегий временно недоступна: не найден LuckPerms.</#f87171>"
+  items-plugin-missing: "<#f87171>Не удалось выдать предмет (плагин предметов недоступен). <#a7f3d0>{price} tk возвращены на ваш баланс.</#a7f3d0></#f87171>"
+  rank-bought: "<#a7f3d0>Вы купили привилегию {rank} <#e9d5ff>на {days}</#e9d5ff> за <#f0abfc>{price} tk</#f0abfc>! Остаток: <#f0abfc>{after} tk</#f0abfc></#a7f3d0>"
+  rank-extended: "<#a7f3d0>Привилегия {rank} <#e9d5ff>продлена на {days}</#e9d5ff> за <#f0abfc>{price} tk</#f0abfc>! Действует до <#f0abfc>{date}</#f0abfc></#a7f3d0>"
+  rank-upgraded: "<#a7f3d0>Привилегия повышена до {rank} <#e9d5ff>за доплату <#f0abfc>{price} tk</#f0abfc></#e9d5ff>! Остаток: <#f0abfc>{after} tk</#f0abfc></#a7f3d0>"
+  rank-expired: "<#f87171>Срок вашей привилегии {rank} истёк.</#f87171>"
+  item-bought: "<#a7f3d0>Вы купили {item} <#e9d5ff>за <#f0abfc>{price} tk</#f0abfc></#e9d5ff>! Остаток: <#f0abfc>{after} tk</#f0abfc></#a7f3d0>"
+  already-owned: "<#fbbf24>У вас уже есть эта привилегия.</#fbbf24>"
+  purchase-denied: "<#fbbf24>{reason}</#fbbf24>"
+  balance-info: "<#e9d5ff>Ваш баланс: <#f0abfc>{balance} tk</#f0abfc> (TwixCoin)</#e9d5ff>"
+  rank-info-none: "<#c4b5fd>У вас нет активной привилегии. Купить: <#f0abfc>/donshop</#f0abfc></#c4b5fd>"
+  rank-info: "<#e9d5ff>Ваша привилегия: {rank} <#c4b5fd>({days})</#c4b5fd></#e9d5ff>"
+  reloaded: "<#a7f3d0>Конфигурация DonateShop перезагружена.</#a7f3d0>"
+  admin-setrank: "<#a7f3d0>Игроку <#f0abfc>{player}</#f0abfc> выдана привилегия {rank} <#e9d5ff>({days})</#e9d5ff>.</#a7f3d0>"
+  admin-removerank: "<#a7f3d0>У игрока <#f0abfc>{player}</#f0abfc> снята привилегия.</#a7f3d0>"
+  player-not-found: "<#f87171>Игрок не найден.</#f87171>"
+  unknown-rank: "<#f87171>Неизвестная привилегия. Доступно: {ranks}</#f87171>"
+  usage: "<#e9d5ff>Использование: <#f0abfc>/donshop</#f0abfc> — магазин, <#f0abfc>/donshop balance</#f0abfc> — баланс, <#f0abfc>/donshop setrank <ник> <привилегия> [дней|forever]</#f0abfc>, <#f0abfc>/donshop removerank <ник></#f0abfc>, <#f0abfc>/donshop reload</#f0abfc></#e9d5ff>"
